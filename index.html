@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>💖 Gửi vợ iu 💖</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(#ffd6e8, #e0f7ff);
+}
+
+/* LOGIN */
+#login {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: pink;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: hotpink;
+  transform: scale(1.1);
+}
+
+/* MAIN */
+#main {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.box {
+  background: rgba(255,255,255,0.9);
+  padding: 30px;
+  border-radius: 20px;
+}
+
+/* HEART */
+.heart {
+  position: absolute;
+  color: red;
+  animation: fly 5s linear infinite;
+}
+
+@keyframes fly {
+  from { transform: translateY(100vh); opacity:1;}
+  to { transform: translateY(-10vh); opacity:0;}
+}
+
+/* shake */
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 NHẠC -->
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-box" id="loginBox">
+    <h2>💖 Welcome 💖</h2>
+    <input id="user" placeholder="Username">
+    <input id="pass" type="password" placeholder="Password">
+    <button onclick="login()">Login 💕</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="box" id="content">
+    <h2>Bạn có biết khi nào thiên thần xuất hiện trên thế giới không? 😳</h2>
+    <button onclick="answer(false)">Không</button>
+    <button onclick="answer(true)">Có</button>
+  </div>
+</div>
+
+<script>
+
+// PLAY NHẠC
+function playMusic(){
+  let music = document.getElementById("bgm");
+  music.volume = 0.5; // âm lượng 50%
+  music.play();
+}
+
+// LOGIN
+function login(){
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
+  let box = document.getElementById("loginBox");
+
+  if(user === "Nguyễn Ngọc Ái Linh" && pass === "2310"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("main").style.display="flex";
+    playMusic(); // 🎵 chạy nhạc khi login
+  } else {
+    box.classList.add("shake");
+    setTimeout(()=>box.classList.remove("shake"),300);
+    alert("Sai rồi nha 😏");
+  }
+}
+
+// ANSWER
+function answer(yes){
+  let content = document.getElementById("content");
+
+  if(!yes){
+    content.innerHTML = `
+      <h2>💖 Đó là ngày 23/10/2012 💖</h2>
+      <p>Ngày mà thiên thần cụa đời tui xuất hiện á ❤✨</p>
+    `;
+  } else {
+    content.innerHTML = `
+      <h2>👀 Vậy đó là ngày nào dạa?</h2>
+      <input id="dateInput" placeholder="Nhập ngày...">
+      <button onclick="checkDate()">Xác nhận</button>
+    `;
+  }
+}
+
+// CHECK DATE
+function checkDate(){
+  let val = document.getElementById("dateInput").value;
+  let content = document.getElementById("content");
+
+  if(val.includes("23/10/2012")){
+    content.innerHTML = `
+      <h2>😳 Chuẩn luôn!</h2>
+      <p>Thiên thần của tui đó 💖</p>
+    `;
+  } else {
+    content.innerHTML = `
+      <h2>😏 Sai rồi nha</h2>
+      <p>Đáp án đúng là 23/10/2012 💖</p>
+    `;
+  }
+}
+
+// TIM BAY
+setInterval(()=>{
+  let heart = document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (Math.random()*20+10)+"px";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),5000);
+},300);
+
+// CLICK NỔ TIM
+document.addEventListener("click", function(e){
+  for(let i=0;i<10;i++){
+    let heart = document.createElement("div");
+    heart.innerHTML="💖";
+    heart.style.position="absolute";
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+    heart.style.transition="1s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.style.transform=`translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px)`;
+      heart.style.opacity=0;
+    },10);
+
+    setTimeout(()=>heart.remove(),1000);
+  }
+});
+
+</script>
+
+</body>
+</html>
